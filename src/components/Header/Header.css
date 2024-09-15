@@ -24,3 +24,9 @@ header a:hover {
     color: #161616;
     text-decoration: underline;
 }
+
+a.active-link {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #161616;
+}
