@@ -1,12 +1,11 @@
 import React from 'react';
-import './Host.css';
 
-function Host() {
+function Income() {
   return (
     <div>
-      
+      Income
     </div>
   )
 }
 
-export default Host;
+export default Income;
