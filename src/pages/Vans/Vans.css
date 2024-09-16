@@ -2,6 +2,15 @@
     padding-inline: 23px
 }
 
+.van-list-filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.van-list-filter-buttons > a {
+    margin-right: 15px;
+}
+
 .van-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -12,7 +21,7 @@
 
 .van-tile a {
     color: #161616;
-    text-decoration: none;
+    text-decoration: none;    
 }
 
 .van-tile img {
@@ -49,18 +58,15 @@
     color: #FFEAD0;
 }
 
-.van-type.simple:hover,
-.van-type.simple.selected {
+.van-type.simple:hover, .van-type.simple.selected {
     background-color: #E17654;
 }
 
-.van-type.rugged:hover,
-.van-type.rugged.selected {
+.van-type.rugged:hover, .van-type.rugged.selected {
     background-color: #115E59;
 }
 
-.van-type.luxury:hover,
-.van-type.luxury.selected {
+.van-type.luxury:hover, .van-type.luxury.selected {
     background-color: #161616;
 }
 
