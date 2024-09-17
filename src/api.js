@@ -1,7 +1,3 @@
-// A function whose only purpose is to delay execution
-// for the specified # of milliseconds when used w/ `await`
-// e.g. inside an async function:
-// await sleep(2000)  => pauses the function for 2 seconds before moving on
 function sleep(ms) {
     return new Promise(resolve => setTimeout(() => resolve(), ms))
 }
@@ -35,18 +31,33 @@ export async function getHostVans(id) {
 }
 
 export async function loginUser(creds) {
-    const res = await fetch("/api/login",
-        { method: "post", body: JSON.stringify(creds) }
-    )
-    const data = await res.json()
-
-    if (!res.ok) {
-        throw {
-            message: data.message,
-            statusText: res.statusText,
-            status: res.status
+    try {
+        const res = await fetch("/api/login", {
+            method: "POST",
+            body: JSON.stringify(creds),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await res.json();
+        console.log(data)
+        if (!res.ok) {
+            console.log("1st err")
+            throw {
+                message: data.message || "An error occurred",
+                statusText: res.statusText,
+                status: res.status
+            };
         }
-    }
+        console.log("no err")
+        return data;
+    } catch (error) {
+        console.error('Error in loginUser:', error);
+        throw {
 
-    return data
+            message: error.message || "An unexpected error occurred",
+            statusText: error.statusText,
+            status: error.status
+        };
+    }
 }
