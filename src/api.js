@@ -42,7 +42,6 @@ export async function getHostVans() {
         ...doc.data(),
         id: doc.id
     }))
-    console.log("successfully rendered host vans")
     return vans
 }
 
