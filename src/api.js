@@ -43,7 +43,48 @@ export async function getHostVans() {
     return vans
 }
 
+// export async function loginUser(creds) {
+//     try {
+//         const res = await fetch("/api/login", {
+//             method: "POST",
+//             body: JSON.stringify(creds),
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+//         const data = await res.json();
+//         console.log(data)
+//         if (!res.ok) {
+//             console.log("1st err")
+//             throw {
+//                 message: data.message || "An error occurred",
+//                 statusText: res.statusText,
+//                 status: res.status
+//             };
+//         }
+//         console.log("no err")
+//         return data;
+//     } catch (error) {
+//         console.error('Error in loginUser:', error);
+//         throw {
+
+//             message: error.message || "An unexpected error occurred",
+//             statusText: error.statusText,
+//             status: error.status
+//         };
+//     }
+// }
+
 export async function loginUser(creds) {
+    if (process.env.NODE_ENV === "production") {
+        // Simulated response in production without a real backend
+        return {
+            user: { email: creds.email, name: "Simulated User" },
+            token: "simulated-token"
+        };
+    }
+
+    // The original code for development
     try {
         const res = await fetch("/api/login", {
             method: "POST",
@@ -52,22 +93,27 @@ export async function loginUser(creds) {
                 'Content-Type': 'application/json'
             }
         });
-        const data = await res.json();
-        console.log(data)
+
+        let data;
+        const contentType = res.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+            data = await res.json();
+        } else {
+            data = { message: "No JSON response from server" };
+        }
+
         if (!res.ok) {
-            console.log("1st err")
             throw {
                 message: data.message || "An error occurred",
                 statusText: res.statusText,
                 status: res.status
             };
         }
-        console.log("no err")
+
         return data;
     } catch (error) {
         console.error('Error in loginUser:', error);
         throw {
-
             message: error.message || "An unexpected error occurred",
             statusText: error.statusText,
             status: error.status
