@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, doc, getDoc, query, where } from "firebase/firestore/lite";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "react-vanlife-project.firebaseapp.com",
-  projectId: "react-vanlife-project",
-  storageBucket: "react-vanlife-project.appspot.com",
-  messagingSenderId: "35842905783",
-  appId: "1:35842905783:web:d8f5b4ae490ce7acdedf32"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: "react-vanlife-project.firebaseapp.com",
+    projectId: "react-vanlife-project",
+    storageBucket: "react-vanlife-project.appspot.com",
+    messagingSenderId: "35842905783",
+    appId: "1:35842905783:web:d8f5b4ae490ce7acdedf32"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -34,13 +34,18 @@ export async function getVan(id) {
 }
 
 export async function getHostVans() {
-    const q = query(vansCollectionRef, where("hostId", "==", "123"))
-    const snapshot = await getDocs(q)
-    const vans = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-    }))
-    return vans
+    if (process.env.NODE_ENV === "development") {
+        const response = await fetch("/host/vans");
+        return await response.json();
+    } else {
+        const q = query(vansCollectionRef, where("hostId", "==", "123"))
+        const snapshot = await getDocs(q)
+        const vans = snapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        }))
+        return vans
+    }
 }
 
 // export async function loginUser(creds) {
