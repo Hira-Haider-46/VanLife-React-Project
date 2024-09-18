@@ -16,6 +16,7 @@ const db = getFirestore(app);
 const vansCollectionRef = collection(db, "vans")
 
 export async function getVans() {
+    console.log("vans")
     const snapshot = await getDocs(vansCollectionRef)
     const vans = snapshot.docs.map(doc => ({
         ...doc.data(),
@@ -25,6 +26,7 @@ export async function getVans() {
 }
 
 export async function getVan(id) {
+    console.log("van")
     const docRef = doc(db, "vans", id)
     const snapshot = await getDoc(docRef)
     return {
@@ -34,8 +36,10 @@ export async function getVan(id) {
 }
 
 export async function getHostVans() {
+    console.log("host vans")
     if (process.env.NODE_ENV === "development") {
         const response = await fetch("/host/vans");
+        console.log("host vans rendering failed")
         return await response.json();
     } else {
         const q = query(vansCollectionRef, where("hostId", "==", "123"))
