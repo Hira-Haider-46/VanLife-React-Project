@@ -36,54 +36,15 @@ export async function getVan(id) {
 }
 
 export async function getHostVans() {
-    console.log("host vans")
-    if (process.env.NODE_ENV === "development") {
-        const response = await fetch("/api/host/vans");
-        console.log("host vans rendering failed")
-        return await response.json();
-    } else {
-        const q = query(vansCollectionRef, where("hostId", "==", "123"))
-        const snapshot = await getDocs(q)
-        const vans = snapshot.docs.map(doc => ({
-            ...doc.data(),
-            id: doc.id
-        }))
-        console.log("successfully rendered host vans")
-        return vans
-    }
+    const q = query(vansCollectionRef, where("hostId", "==", "123"))
+    const snapshot = await getDocs(q)
+    const vans = snapshot.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id
+    }))
+    console.log("successfully rendered host vans")
+    return vans
 }
-
-// export async function loginUser(creds) {
-//     try {
-//         const res = await fetch("/api/login", {
-//             method: "POST",
-//             body: JSON.stringify(creds),
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-//         const data = await res.json();
-//         console.log(data)
-//         if (!res.ok) {
-//             console.log("1st err")
-//             throw {
-//                 message: data.message || "An error occurred",
-//                 statusText: res.statusText,
-//                 status: res.status
-//             };
-//         }
-//         console.log("no err")
-//         return data;
-//     } catch (error) {
-//         console.error('Error in loginUser:', error);
-//         throw {
-
-//             message: error.message || "An unexpected error occurred",
-//             statusText: error.statusText,
-//             status: error.status
-//         };
-//     }
-// }
 
 export async function loginUser(creds) {
     if (process.env.NODE_ENV === "production") {
