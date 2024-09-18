@@ -77,14 +77,12 @@ export async function getHostVans() {
 
 export async function loginUser(creds) {
     if (process.env.NODE_ENV === "production") {
-        // Simulated response in production without a real backend
         return {
             user: { email: creds.email, name: "Simulated User" },
             token: "simulated-token"
         };
     }
 
-    // The original code for development
     try {
         const res = await fetch("/api/login", {
             method: "POST",
