@@ -36,6 +36,7 @@ export function makeServer() {
 
       this.get("/host/vans", (schema, request) => {
         // Hard-code the hostId for now
+        console.log("server.js host vans")
         return schema.vans.where({ hostId: "123" })
       })
 
