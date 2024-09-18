@@ -38,7 +38,7 @@ export async function getVan(id) {
 export async function getHostVans() {
     console.log("host vans")
     if (process.env.NODE_ENV === "development") {
-        const response = await fetch("/host/vans");
+        const response = await fetch("/api/host/vans");
         console.log("host vans rendering failed")
         return await response.json();
     } else {
